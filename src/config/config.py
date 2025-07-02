@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -8,16 +8,15 @@ class Settings(BaseSettings):
     使用时请确保 .env 文件存在并包含正确的数据库连接信息
     """
 
-    db_user: str
-    db_password: str
+    db_user: str = "streamlit_user"
+    db_password: str = "streamlit_password"
     db_host: str = "localhost"
     db_port: int = 3306
-    db_name: str
+    db_name: str = "streamlit_db"
 
     log_level: str = "DEBUG"
 
-    class Config:
-        env_file: str = ".env"
+    model_config = SettingsConfigDict(env_file=".env")
 
 
 settings = Settings()  # type: ignore
