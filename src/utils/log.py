@@ -11,5 +11,4 @@ def configure_logger(level: str = "DEBUG"):
     return logger
 
 
-# 默认初始化日志
-default_logger = configure_logger()
+configure_logger()
