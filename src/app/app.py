@@ -1,6 +1,6 @@
 import streamlit as st
-from ..services import db_instance
-from ..db.model import StockData
+from src.services import db_instance
+from src.db.model import StockData
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -127,7 +127,7 @@ portfolio_sharpe = (
     else np.nan
 )
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([2, 1])
 with col1:
     st.subheader("投资组合历史净值走势图")
     st.line_chart(portfolio_nav)

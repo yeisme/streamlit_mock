@@ -1,6 +1,6 @@
 import streamlit as st
-from ..services import db_instance
-from ..db.model import UserData
+from src.services import db_instance
+from src.db.model import UserData
 import hashlib
 
 
