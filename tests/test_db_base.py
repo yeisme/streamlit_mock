@@ -1,6 +1,6 @@
 from typing import List
 from src.db.base import init_db, check_connection, get_db
-from src.db.model import StockData
+from src.db.model import StockData, UserData
 from src.utils.mock_data import mock_five_stocks
 
 
@@ -51,3 +51,44 @@ def test_crud_stock_data():
                 r.stock_code == row["stock_code"] and r.date == row["date"]
                 for r in result
             )
+
+
+def test_crud_user_data():
+    init_db()
+    with get_db() as db:
+        # 清空表数据
+        db.query(UserData).delete()
+        db.commit()
+
+        # 插入用户
+        user1 = UserData(username="testuser1", password="pass1")
+        user2 = UserData(username="testuser2", password="pass2")
+        db.add(user1)
+        db.add(user2)
+        db.commit()
+
+        # 查询用户
+        users = db.query(UserData).all()
+        assert len(users) == 2
+        assert any(u.username == "testuser1" for u in users)
+        assert any(u.username == "testuser2" for u in users)
+
+        # 更新用户密码
+        user1_db = db.query(UserData).filter_by(username="testuser1").first()
+        setattr(user1_db, "password", "newpass1")
+        db.commit()
+        user1_db = db.query(UserData).filter_by(username="testuser1").first()
+        assert getattr(user1_db, "password") == "newpass1"
+
+        # 删除用户
+        db.query(UserData).filter_by(username="testuser1").delete()
+        db.commit()
+        users = db.query(UserData).all()
+        assert len(users) == 1
+        assert getattr(users[0], "username") == "testuser2"
+
+        # 清空表
+        db.query(UserData).delete()
+        db.commit()
+        users = db.query(UserData).all()
+        assert len(users) == 0
