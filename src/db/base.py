@@ -64,7 +64,10 @@ def init_db():
     """
     try:
         # 导入所有模型模块以便注册
-        from .model import StockData  # noqa: F401
+        from .model import (  # noqa: F401
+            StockData,
+            UserData,
+        )
 
         Base.metadata.create_all(bind=engine)
         logger.info("数据库表初始化完成")
