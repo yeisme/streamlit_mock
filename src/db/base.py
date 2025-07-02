@@ -1,3 +1,4 @@
+import contextlib
 from typing import Any
 
 import pandas as pd
@@ -32,6 +33,7 @@ class Base(DeclarativeBase):
     pass
 
 
+@contextlib.contextmanager
 def get_db():
     """
     获取数据库会话的生成器，使用完毕后应关闭连接
@@ -62,7 +64,7 @@ def init_db():
     """
     try:
         # 导入所有模型模块以便注册
-        from . import model  # noqa: F401
+        from .model import StockData  # noqa: F401
 
         Base.metadata.create_all(bind=engine)
         logger.info("数据库表初始化完成")
@@ -90,7 +92,7 @@ def check_connection() -> bool:
         return False
 
 
-def df_to_sql():
+def gen_df_to_sql() -> None:
     """
     将模拟数据 DataFrame 写入到数据库的 'stock_data' 表中
     """

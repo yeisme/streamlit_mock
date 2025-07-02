@@ -35,12 +35,14 @@ def generate_stock_data(
         close_prices = base_price + np.random.normal(0, 1, len(dates))
 
         for date, op, cp in zip(dates, open_prices, close_prices):
-            all_data.append({
-                "stock_code": code,
-                "date": date.date(),
-                "open": round(op, 2),
-                "close": round(cp, 2),
-            })
+            all_data.append(
+                {
+                    "stock_code": code,
+                    "date": date.date(),
+                    "open": round(op, 2),
+                    "close": round(cp, 2),
+                }
+            )
 
     df = pd.DataFrame(all_data)
     return df
