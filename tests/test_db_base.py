@@ -1,4 +1,3 @@
-from typing import List
 from src.db.base import init_db, check_connection, get_db
 from src.db.model import StockData, UserData
 from src.utils.mock_data import mock_five_stocks
@@ -42,7 +41,7 @@ def test_crud_stock_data():
         db.commit()
 
         # 查询数据
-        result: List[StockData] = db.query(StockData).all()
+        result = db.query(StockData).all()
         assert len(result) == len(df)
 
         # 验证数据正确性

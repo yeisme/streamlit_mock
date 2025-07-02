@@ -41,9 +41,8 @@ def get_db():
         with get_db() as db:
             ...
     """
-    db: Session
     try:
-        db: Session = SessionLocal()
+        db = SessionLocal()
         logger.debug("数据库会话已创建")
         yield db
     except Exception as e:
