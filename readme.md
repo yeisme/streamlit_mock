@@ -4,6 +4,8 @@
 
 streamlit_mock 是一个基于 Streamlit 的股票数据统计模拟系统。该项目通过容器化部署，结合 MySQL 数据库，实现了股票行情数据的存储、用户登录认证及多维度的统计分析与可视化。
 
+![image](image.png)
+
 ## 功能特性
 
 - 用户登录（用户名密码存储于 MySQL，使用 Streamlit 登录模块，支持登录提示）
@@ -49,13 +51,12 @@ pip install -e .
 ```
 
 ```bash
-streamlit run app.py
+python -m streamlit run src/main.py
 ```
 
 ### 登录
 
-- 使用预设的用户名和密码登录（账号:密码 admin:admin）
-- 登录后可查看股票统计与可视化页面
+- 注册后登录后可查看股票统计与可视化页面
 
 ## 数据说明
 
@@ -70,13 +71,9 @@ streamlit run app.py
 - 夏普比率：收益与风险比
 - 投资组合：5 只股票等权持有的整体表现
 
-## CI/CD
-
-- 使用 GitHub Actions 实现持续集成
-
 ## 其他说明
 
-- 如需自定义股票数据或用户信息，请修改初始化 Python 脚本
+- 如需自定义股票数据或用户信息，请修改初始化 Python 文件
 - 如遇端口冲突或数据库连接问题，请检查 docker-compose 配置
 
 ---

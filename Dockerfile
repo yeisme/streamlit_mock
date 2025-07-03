@@ -5,11 +5,12 @@ WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
 
-# Create a virtual environment
-RUN python -m venv .venv
-
-# Install uv into the virtual environment and then sync dependencies
-RUN /app/.venv/bin/python -m pip install uv && /app/.venv/bin/uv sync
+# Create a virtual environment, install uv, sync dependencies, and clean up
+RUN python -m venv .venv && \
+    /app/.venv/bin/python -m pip install uv && \
+    /app/.venv/bin/uv sync && \
+    /app/.venv/bin/uv clean && \
+    rm -rf /root/.cache/pip # Clean pip cache
 
 # Copy the rest of the application code
 COPY . .
