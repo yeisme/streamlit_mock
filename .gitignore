@@ -14,3 +14,7 @@ wheels/
 
 # database
 data/
+
+# tar
+*.tar.gz
+*.tar

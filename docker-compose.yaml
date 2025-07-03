@@ -1,26 +1,29 @@
 name: streamlit_mock
 
 services:
-  streamlit_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8501:8501"
-    volumes:
-      - ./data:/app/data
-    environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=admin123456
-      - MYSQL_DATABASE=stock_data
-    depends_on:
-      - mysql
-
   mysql:
     image: mysql:8.0.42-bookworm
     environment:
-      MYSQL_ROOT_PASSWORD: admin123456
-      MYSQL_DATABASE: stock_data
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  streamlit_mock:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8501:8501"
+    depends_on:
+      - mysql
